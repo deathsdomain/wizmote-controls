@@ -27,7 +27,7 @@ blueprint:
               sequence: !lambda 'return data.sequence;'
     ```
 
-  source_url: https://github.com/deathsdomain/wizmote-controls/blob/main/blueprint.yaml
+  source_url: https://github.com/deathsdomain/wizmote-controls/blob/main/wizmote-controls-blueprint.yaml
   domain: automation
   input:
     remote:
