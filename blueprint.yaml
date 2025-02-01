@@ -1,0 +1,111 @@
+blueprint:
+  name: Wizmote Controls
+  description: |
+    # Wizmote Control
+
+    This blueprint provides a set of controls for a Wizmote device, allowing you to assign custom actions to the buttons on the device.
+
+  source_url: https://github.com/deathsdomain/wizmote-controls/blob/main/blueprint.yaml
+  domain: automation
+  input:
+    remote:
+      name: WizMote MAC Address
+      description: MAC address of the WizMote, can be found by watching for the 'esphome.wizmote_action' events in Developer Tools -> Events
+      selector:
+        text:
+    action_on_press:
+      name: Action on Press
+      description: Action to perform when the 'ON' button is pressed
+      default: []
+      selector:
+        action:
+    action_off_press:
+      name: Action on Off Press
+      description: Action to perform when the 'OFF' button is pressed
+      default: []
+      selector:
+        action:
+    action_moon_press:
+      name: Action on Moon Press
+      description: Action to perform when the 'Moon' button is pressed
+      default: []
+      selector:
+        action:
+    action_1_press:
+      name: Action on 1 Press
+      description: Action to perform when the '1' button is pressed
+      default: []
+      selector:
+        action:
+    action_2_press:
+      name: Action on 2 Press
+      description: Action to perform when the '2' button is pressed
+      default: []
+      selector:
+        action:
+    action_3_press:
+      name: Action on 3 Press
+      description: Action to perform when the '3' button is pressed
+      default: []
+      selector:
+        action:
+    action_4_press:
+      name: Action on 4 Press
+      description: Action to perform when the '4' button is pressed
+      default: []
+      selector:
+        action:
+    action_brightness_down_press:
+      name: Action on Brightness Down Press
+      description: Action to perform when the 'Brightness Down' button is pressed
+      default: []
+      selector:
+        action:
+    action_brightness_up_press:
+      name: Action on Brightness Up Press
+      description: Action to perform when the 'Brightness Up' button is pressed
+      default: []
+      selector:
+        action:
+
+mode: restart
+
+trigger:
+  platform: event
+  event_type: esphome.wizmote_action
+  event_data:
+    mac: !input remote
+
+action:
+
+  - variables:
+      button_pressed: "{{ trigger.event.data.button | int }}"
+
+  - choose:
+    - conditions:
+        - "{{ button_pressed == 1 }}"
+      sequence: !input action_on_press
+    - conditions:
+        - "{{ button_pressed == 2 }}"
+      sequence: !input action_off_press
+    - conditions:
+        - "{{ button_pressed == 3 }}"
+      sequence: !input action_moon_press
+    - conditions:
+        - "{{ button_pressed == 16 }}"
+      sequence: !input action_1_press
+    - conditions:
+        - "{{ button_pressed == 17 }}"
+      sequence: !input action_2_press
+    - conditions:
+        - "{{ button_pressed == 18 }}"
+      sequence: !input action_3_press
+    - conditions:
+        - "{{ button_pressed == 19 }}"
+      sequence: !input action_4_press
+    - conditions:
+        - "{{ button_pressed == 8 }}"
+      sequence: !input action_brightness_down_press
+    - conditions:
+        - "{{ button_pressed == 9 }}"
+      sequence: !input action_brightness_up_press
