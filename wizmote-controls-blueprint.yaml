@@ -36,13 +36,13 @@ blueprint:
       selector:
         text:
     action_on_press:
-      name: Action on Press
+      name: Action on ON Press
       description: Action to perform when the 'ON' button is pressed
       default: []
       selector:
         action:
     action_off_press:
-      name: Action on Off Press
+      name: Action on OFF Press
       description: Action to perform when the 'OFF' button is pressed
       default: []
       selector:
