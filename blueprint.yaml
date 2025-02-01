@@ -5,6 +5,28 @@ blueprint:
 
     This blueprint provides a set of controls for a Wizmote device, allowing you to assign custom actions to the buttons on the device.
 
+    Works with an ESPHome device with a [custom component](https://github.com/jesserockz/wizmote-esphome) installed to listen for button
+    presses from the WizMote, broadcasting an event to Home Assistant to interpret.
+
+    ```yaml
+    # sample esphome configuration
+    external_components:
+      - source: github://jesserockz/wizmote-esphome
+        components:
+          - esp_now
+          - wizmote
+    esp_now:
+
+    wizmote:
+      on_button:
+        - homeassistant.event:
+            event: esphome.wizmote_action
+            data:
+              mac: !lambda 'return format_hex(data.bssid, 6);'
+              button: !lambda 'return data.button;'
+              sequence: !lambda 'return data.sequence;'
+    ```
+
   source_url: https://github.com/deathsdomain/wizmote-controls/blob/main/blueprint.yaml
   domain: automation
   input:
