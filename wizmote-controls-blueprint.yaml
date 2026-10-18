@@ -35,6 +35,20 @@ blueprint:
       description: MAC address of the WizMote, can be found by watching for the 'esphome.wizmote_action' events in Developer Tools -> Events
       selector:
         text:
+    debounce:
+      name: Debounce Time
+      description: >-
+        Ignore any further button events from this WizMote for this long after one is handled.
+        Useful when multiple ESPHome receivers pick up the same press and each send an event.
+        Set to 0 to disable.
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 5000
+          step: 50
+          unit_of_measurement: ms
+          mode: box
     action_on_press:
       name: Action on ON Press
       description: Action to perform when the 'ON' button is pressed
@@ -97,6 +111,16 @@ trigger:
   event_type: esphome.wizmote_action
   event_data:
     mac: !input remote
+
+variables:
+  debounce_ms: !input debounce
+
+condition:
+  - condition: template
+    value_template: >-
+      {{ debounce_ms | int(0) <= 0
+         or this.attributes.last_triggered is none
+         or (now() - this.attributes.last_triggered).total_seconds() * 1000 >= debounce_ms | int(0) }}
 
 action:
 
