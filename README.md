@@ -26,4 +26,8 @@ wizmote:
           sequence: !lambda 'return data.sequence;'
 ```
 
+## Multiple receivers
+
+If you have more than one ESPHome receiver in range of the remote, each one will send an event for the same press. Set the **Debounce Time** option (e.g. 300 ms) to ignore repeat events from the same WizMote that arrive within that window after an action has been triggered.
+
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fdeathsdomain%2Fwizmote-controls%2Fblob%2Fmain%2Fwizmote-controls-blueprint.yaml)
